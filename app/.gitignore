@@ -1,0 +1,31 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Flask environment
+.env
+*.env
+instance/
+*.db
+
+# Editor stuff
+.vscode/
+.idea/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Virtual environments
+venv/
+.env/
+
+# Node stuff if you use it
+node_modules/
+
+# Ignore compiled JS if built from another tool
+*.bundle.js
