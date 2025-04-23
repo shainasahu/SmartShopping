@@ -4,14 +4,18 @@
 
 <br>
 
-<div class="d-flex flex-wrap justify-content-center gap-3">
-  <button class="btn btn-secondary">Cereal</button>
-  <button class="btn btn-secondary">Jam</button>
-  <button class="btn btn-secondary">Eggs</button>
-  <button class="btn btn-secondary">Bananas</button>
-  <button class="btn btn-secondary">Chips</button>
-  <button class="btn btn-secondary">Soda</button>
-  <button class="btn btn-secondary">Milk</button>
+<div class="container mt-5">
+    <div class="row text-center">
+        <div class="col">
+            <a href="{{ url_for('learn', lesson_id='1.1') }}" class="btn btn-outline-primary m-2">Cereal</a>
+            <a href="{{ url_for('learn', lesson_id='2.1') }}" class="btn btn-outline-primary m-2">Jam</a>
+            <a href="{{ url_for('learn', lesson_id='3.1') }}" class="btn btn-outline-primary m-2">Eggs</a>
+            <a href="{{ url_for('learn', lesson_id='4.1') }}" class="btn btn-outline-primary m-2">Bananas</a>
+            <a href="{{ url_for('learn', lesson_id='5.1') }}" class="btn btn-outline-primary m-2">Chips</a>
+            <a href="{{ url_for('learn', lesson_id='6.1') }}" class="btn btn-outline-primary m-2">Soda</a>
+            <a href="{{ url_for('learn', lesson_id='7.1') }}" class="btn btn-outline-primary m-2">Milk</a>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
