@@ -19,7 +19,7 @@
   <body>
     <nav class="navbar navbar-light bg-light justify-content-between px-3">
       <a class="btn btn-outline-primary" href="{{ url_for('homepage') }}">Go to Grocery Store</a>
-      <button class="btn btn-outline-success" disabled>Ready to shop?</button>
+      <a class="btn btn-outline-success" href="{{ url_for('quiz', qid=1) }}">Ready to shop?</a>
     </nav>
 
     <!-- Placeholder for child templates -->

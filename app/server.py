@@ -182,13 +182,13 @@ def learn(lesson_id):
 ## Added quiz part
 app.secret_key = 'zoe-smart-shopping-secret'
 quiz_questions = [
-    {"id": 1, "hint": "Buy some fresh apple juice…", "options": ["Charm Pricing", "Scarcity", "BOGO Deals"], "answer": "Charm Pricing"},
-    {"id": 2, "hint": "Buy some milk…", "options": ["Scarcity Urgency", "Labeling", "Anchoring"], "answer": "Scarcity Urgency"},
-    {"id": 3, "hint": "Buy some bananas…", "options": ["Labeling", "Unit Price Confusion", "Charm Pricing"], "answer": "Labeling"},
-    {"id": 4, "hint": "Buy some soda…", "options": ["Anchoring", "Phonetic Pricing", "Social Proof"], "answer": "Anchoring"},
-    {"id": 5, "hint": "Buy some crispy chips…", "options": ["BOGO Deals", "Visual Compression", "Scarcity"], "answer": "BOGO Deals"},
-    {"id": 6, "hint": "Buy some strawberry jam…", "options": ["Social Proof", "Labeling", "Odd Pricing"], "answer": "Social Proof"},
-    {"id": 7, "hint": "Buy some eggs…", "options": ["Unit Price Confusion", "Charm Pricing", "Anchoring"], "answer": "Unit Price Confusion"},
+    {"id": 1, "description": "Buy some fresh apple juice…", "options": ["Product 1", "Product 2"], "answer": "Product 1"},
+    {"id": 2, "description": "Buy some milk…", "options": ["Product 1", "Product 2"], "answer": "Product 2"},
+    {"id": 3, "description": "Buy some bananas…", "options": ["Product 1", "Product 2"], "answer": "Product 1"},
+    {"id": 4, "description": "Buy some soda…", "options": ["Product 1", "Product 2"], "answer": "Product 2"},
+    {"id": 5, "description": "Buy some crispy chips…", "options": ["Product 1", "Product 2"], "answer": "Product 1"},
+    {"id": 6, "description": "Buy some strawberry jam…", "options": ["Product 1", "Product 2"], "answer": "Product 1"},
+    {"id": 7, "description": "Buy some eggs…", "options": ["Product 1", "Product 2"], "answer": "Product 2"},
 ]
 
 @app.route("/quiz/<int:qid>")
