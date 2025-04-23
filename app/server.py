@@ -11,6 +11,14 @@ app = Flask(__name__)
 def landingpage():
     return render_template('landingpage.html')
 
+@app.route('/landingpage2')
+def landingpage2():
+    return render_template('landingpage2.html')
+
+@app.route('/homepage')
+def homepage():
+    return render_template('homepage.html')
+
  
 if __name__ == '__main__':
    app.run(debug = True, port=5001)
@@ -18,9 +26,9 @@ if __name__ == '__main__':
 '''
 Site Colors
 
-Main - #CF993F
+Main - ?
 
-Accent - #0d6efd
+Accent - ?
 
 Light gray - #B2B6BD
 
