@@ -16,19 +16,17 @@
     <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
 
   </head>
+
   <body>
-    <nav class="navbar navbar-light bg-light justify-content-between px-3">
-      <a class="btn btn-outline-primary" href="{{ url_for('homepage') }}">Go to Grocery Store</a>
-      <button class="btn btn-outline-success" disabled>Ready to shop?</button>
-    </nav>
-
-    <!-- Placeholder for child templates -->
-    <div>
-      {% block content %}
-      {% endblock %}
+    <div class="container d-flex flex-column justify-content-center align-items-center" style="height: 100vh;">
+        <h2 class="mb-4">Welcome to the grocery store!</h2>
+        <h2>You have a long grocery list today!</h2>
+        <h2>But first…</h2>
+        <h2>Explore the store to learn</h2>
+        <h2>how they're tricking you.</h2>
+        <a href="{{ url_for('homepage') }}" class="btn btn-success">Explore Store</a>
     </div>
-
-    <script src="{{ url_for('static', filename='js/landingpage.js') }}"></script>
-
   </body>
+
+
 </html>

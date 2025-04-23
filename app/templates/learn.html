@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="text-center mt-5">
+    <h2>{{ product.title }}</h2>
+    <img src="{{ product.image }}" alt="{{ product.title }}" class="img-fluid my-3" style="max-height: 300px;">
+    <p>{{ product.description }}</p>
+    <h4>{{ product.price }}</h4>
+
+    {% set section, number = lesson_id.split('.') %}
+    {% set section = section|int %}
+    {% set number = number|int %}
+
+    {% if number < 3 %}
+        {% set next_number = number + 1 %}
+        {% set next_id = section|string + '.' + next_number|string %}
+        <a href="{{ url_for('learn', lesson_id=next_id) }}" class="btn btn-primary mt-3">Next product</a>
+    {% else %}
+        <a href="{{ url_for('homepage') }}" class="btn btn-success mt-3">Back to Store</a>
+    {% endif %}
+</div>
+{% endblock %}
