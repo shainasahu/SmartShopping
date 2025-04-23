@@ -8,8 +8,8 @@ app = Flask(__name__)
 # ROUTES
 
 @app.route('/')
-def homepage():
-    return render_template('homepage.html')
+def landingpage():
+    return render_template('landingpage.html')
 
  
 if __name__ == '__main__':
