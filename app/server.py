@@ -1,7 +1,8 @@
 from flask import Flask
 from flask import render_template
-from flask import Response, request, jsonify
+from flask import Response, request, jsonify, redirect, url_for
 from urllib.parse import unquote
+from flask import session
 
 app = Flask(__name__)
 
@@ -177,6 +178,42 @@ def learn(lesson_id):
         return "Product not found", 404
     return render_template("learn.html", product=product, lesson_id=lesson_id)
 
+
+## Added quiz part
+app.secret_key = 'zoe-smart-shopping-secret'
+quiz_questions = [
+    {"id": 1, "description": "Buy some fresh apple juice…", "options": ["Product 1", "Product 2"], "answer": "Product 1"},
+    {"id": 2, "description": "Buy some milk…", "options": ["Product 1", "Product 2"], "answer": "Product 2"},
+    {"id": 3, "description": "Buy some bananas…", "options": ["Product 1", "Product 2"], "answer": "Product 1"},
+    {"id": 4, "description": "Buy some soda…", "options": ["Product 1", "Product 2"], "answer": "Product 2"},
+    {"id": 5, "description": "Buy some crispy chips…", "options": ["Product 1", "Product 2"], "answer": "Product 1"},
+    {"id": 6, "description": "Buy some strawberry jam…", "options": ["Product 1", "Product 2"], "answer": "Product 1"},
+    {"id": 7, "description": "Buy some eggs…", "options": ["Product 1", "Product 2"], "answer": "Product 2"},
+]
+
+@app.route("/quiz/<int:qid>")
+def quiz(qid):
+    if qid <= len(quiz_questions):
+        return render_template("quiz.html", question=quiz_questions[qid - 1], total=len(quiz_questions))
+    else:
+        return redirect(url_for("quiz_result"))
+
+@app.route("/submit_answer", methods=["POST"])
+def submit_answer():
+    qid = int(request.form["qid"])
+    selected = request.form["selected"]
+    correct = quiz_questions[qid - 1]["answer"]
+    session.setdefault("score", 0)
+    if selected == correct:
+        session["score"] += 1
+    return redirect(url_for("quiz", qid=qid + 1))
+
+@app.route("/quiz_result")
+def quiz_result():
+    score = session.get("score", 0)
+    total = len(quiz_questions)
+    session.clear()
+    return render_template("result.html", score=score, total=total)
 
 if __name__ == '__main__':
    app.run(debug = True, port=5001)
