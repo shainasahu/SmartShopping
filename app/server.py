@@ -1,7 +1,8 @@
 from flask import Flask
 from flask import render_template
-from flask import Response, request, jsonify
+from flask import Response, request, jsonify, redirect, url_for
 from urllib.parse import unquote
+from flask import session
 
 app = Flask(__name__)
 
@@ -177,6 +178,42 @@ def learn(lesson_id):
         return "Product not found", 404
     return render_template("learn.html", product=product, lesson_id=lesson_id)
 
+
+## Added quiz part
+app.secret_key = 'zoe-smart-shopping-secret'
+quiz_questions = [
+    {"id": 1, "hint": "Buy some fresh apple juice…", "options": ["Charm Pricing", "Scarcity", "BOGO Deals"], "answer": "Charm Pricing"},
+    {"id": 2, "hint": "Buy some milk…", "options": ["Scarcity Urgency", "Labeling", "Anchoring"], "answer": "Scarcity Urgency"},
+    {"id": 3, "hint": "Buy some bananas…", "options": ["Labeling", "Unit Price Confusion", "Charm Pricing"], "answer": "Labeling"},
+    {"id": 4, "hint": "Buy some soda…", "options": ["Anchoring", "Phonetic Pricing", "Social Proof"], "answer": "Anchoring"},
+    {"id": 5, "hint": "Buy some crispy chips…", "options": ["BOGO Deals", "Visual Compression", "Scarcity"], "answer": "BOGO Deals"},
+    {"id": 6, "hint": "Buy some strawberry jam…", "options": ["Social Proof", "Labeling", "Odd Pricing"], "answer": "Social Proof"},
+    {"id": 7, "hint": "Buy some eggs…", "options": ["Unit Price Confusion", "Charm Pricing", "Anchoring"], "answer": "Unit Price Confusion"},
+]
+
+@app.route("/quiz/<int:qid>")
+def quiz(qid):
+    if qid <= len(quiz_questions):
+        return render_template("quiz.html", question=quiz_questions[qid - 1], total=len(quiz_questions))
+    else:
+        return redirect(url_for("quiz_result"))
+
+@app.route("/submit_answer", methods=["POST"])
+def submit_answer():
+    qid = int(request.form["qid"])
+    selected = request.form["selected"]
+    correct = quiz_questions[qid - 1]["answer"]
+    session.setdefault("score", 0)
+    if selected == correct:
+        session["score"] += 1
+    return redirect(url_for("quiz", qid=qid + 1))
+
+@app.route("/quiz_result")
+def quiz_result():
+    score = session.get("score", 0)
+    total = len(quiz_questions)
+    session.clear()
+    return render_template("result.html", score=score, total=total)
 
 if __name__ == '__main__':
    app.run(debug = True, port=5001)
