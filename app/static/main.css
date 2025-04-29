@@ -1,1 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Tauri&display=swap');
 
+* {
+    font-family: 'Tauri', sans-serif;
+}
+
+.navbar-brand {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.content-box {
+    background-color: rgb(194, 238, 194);
+    margin: 10px;
+    padding: 20px;
+    border-radius: 8px; /* makes corners rounded */
+}
+
+.btn-custom-gray {
+    padding: 10px 20px;
+    background-color: #b0b0b0;
+    border: 2px solid #b0b0b0;
+    border-radius: 8px;
+    color: black;
+    font-weight: 500;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-custom-gray:hover {
+    background-color: #b0b0b0;
+    color: white;
+}
+
+.bg-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-image: url('https://cdn.prod.website-files.com/63bc15b680c7e6464531c13e/66dafd5e8b547a9a48d37824_45%20-%20Grocery%20store%20layout%20Hero.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.store-button {
+    position: absolute;
+    padding: 12px 24px;
+    background-color: rgba(240, 240, 240, 0.95);
+    border: 2px solid black;
+    border-radius: 8px;
+    color: black;
+    font-weight: 800;
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.store-button:hover {
+    background-color: #6c757d;
+    color: white;
+}

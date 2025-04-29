@@ -18,8 +18,9 @@
   </head>
   <body>
     <nav class="navbar navbar-light bg-light justify-content-between px-3">
-      <a class="btn btn-outline-primary" href="{{ url_for('homepage') }}">Go to Grocery Store</a>
-      <a class="btn btn-outline-success" href="{{ url_for('quiz', qid=1) }}">Ready to shop?</a>
+      <a class="btn-custom-gray" href="{{ url_for('homepage') }}">Go to Grocery Store</a>
+      <div class="navbar-brand">SMART SHOPPING</div>
+      <a class="btn-custom-gray" href="{{ url_for('quiz', qid=1) }}">Ready to shop?</a>
     </nav>
 
     <!-- Placeholder for child templates -->
@@ -28,7 +29,7 @@
       {% endblock %}
     </div>
 
-    <script src="{{ url_for('static', filename='js/landingpage.js') }}"></script>
+    <script src="{{ url_for('static', filename='homepage.js') }}"></script>
 
   </body>
 </html>

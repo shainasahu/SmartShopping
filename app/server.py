@@ -227,5 +227,5 @@ Accent - ?
 
 Light gray - #B2B6BD
 
-Dark gray - #717884
+Dark gray - #6c757d
 '''
