@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz Results</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='quiz.css') }}">
+  <style>
+    .result-flex {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start;
+      margin-top: 30px;
+    }
+    .bag-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 40%;
+    }
+    .bag-section img {
+      max-width: 100px;
+      margin: 5px;
+    }
+    .best-bag {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="result-container">
+    <div class="top-bar">
+      <a href="{{ url_for('landingpage2') }}" class="btn-nav-left">Go to Grocery Store</a>
+      <a href="{{ url_for('quiz_intro') }}" class="btn-nav-right">Ready to shop?</a>
+    </div>
+
+    <h2>Your results:</h2>
+    <p>You spent <strong>${{ '%.2f'|format(total_spent) }}</strong></p>
+    <p>The best value was <strong>${{ '%.2f'|format(best_value) }}</strong></p>
+    <p>Thanks for shopping!</p>
+
+    <div class="result-flex">
+      <!-- Your Bag -->
+      <div class="bag-section">
+        <h3>Here’s what’s in your bag:</h3>
+        <div class="best-bag">
+          {% for choice in choices %}
+            {% if choice.selected %}
+              {% set index = choice.item.options.index(choice.selected) if choice.selected in choice.item.options else None %}
+              {% if index is not none %}
+                <img src="{{ url_for('static', filename='images/quiz_items/' + choice.item.images[index]) }}" alt="{{ choice.selected }}">
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Best Bag -->
+      <div class="bag-section">
+        <h3>Here’s the best-valued bag:</h3>
+        <img src="{{ url_for('static', filename='images/quiz_items/Best.png') }}" alt="Best Value Items">
+      </div>
+    </div>
+
+    <br>
+    <a href="{{ url_for('quiz_intro') }}" class="back-to-store-btn">Back to the store</a>
+  </div>
+</body>
+</html>

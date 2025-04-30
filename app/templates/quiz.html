@@ -1,17 +1,67 @@
-{% extends "layout.html" %}
-{% block content %}
-<div class="container mt-4">
-    <h3>Question {{ question.id }} of {{ total }}</h3>
-    <p>{{ question.description }}</p>
-    <form method="POST" action="{{ url_for('submit_answer') }}">
-        <input type="hidden" name="qid" value="{{ question.id }}">
-        {% for option in question.options %}
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="selected" id="option{{ loop.index }}" value="{{ option }}" required>
-            <label class="form-check-label" for="option{{ loop.index }}">{{ option }}</label>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Shopping Quiz</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='quiz.css') }}">
+  <script>
+    function showHint() {
+      document.getElementById('hint-text').classList.remove('hidden');
+    }
+
+    function hideHint() {
+      document.getElementById('hint-text').classList.add('hidden');
+    }
+
+    let timer = 10;
+    const countdown = setInterval(() => {
+      timer--;
+      document.getElementById('timer').innerText = timer;
+      if (timer <= 0) {
+        clearInterval(countdown);
+        alert("⏰ Time's up! This question will be marked as incorrect.");
+
+        // Submit with no answer selected — send empty value to backend
+        const form = document.querySelector("form");
+        const hidden = document.createElement("input");
+        hidden.type = "hidden";
+        hidden.name = "selected_price";
+        hidden.value = "";
+        form.appendChild(hidden);
+        form.submit();
+      }
+    }, 1000);
+  </script>
+</head>
+<body>
+  <div class="quiz-container">
+
+    <!-- Navigation Bar -->
+    <div class="top-bar">
+      <a href="{{ url_for('landingpage2') }}" class="btn-nav-left">Go to Grocery Store</a>
+      <a href="{{ url_for('quiz_intro') }}" class="btn-nav-right">Ready to shop?</a>
+      <div id="timer">10</div>
+    </div>
+
+    <!-- Question Prompt -->
+    <h2>{{ item.hint }}</h2>
+
+    <form method="post">
+      <div class="product-section">
+        {% for price, image in paired %}
+          <div class="choice-block">
+            <img src="{{ url_for('static', filename='images/quiz_items/' + image) }}" class="product-img">
+            <button class="price-btn" name="selected_price" value="{{ price }}">{{ price }}</button>
+          </div>
         {% endfor %}
-        <button type="submit" class="btn btn-success mt-3">Continue Shopping</button>
+      </div>
     </form>
-</div>
-{% endblock %}
+
+    <!-- Hint bubble -->
+    <div style="text-align: right; margin-top: 20px; margin-right: 30px;">
+      <a class="hint-link" onmouseover="showHint()" onmouseout="hideHint()" style="color: #1a73e8; cursor: pointer;">Need a Hint?</a>
+      <div id="hint-text" class="hint-text hidden">Tactic being used: <strong>{{ item.tactic }}</strong></div>
+    </div>
+  </div>
+</body>
+</html>
