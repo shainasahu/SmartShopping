@@ -18,14 +18,15 @@
   </head>
 
   <body>
-    <div class="container d-flex flex-column justify-content-center align-items-center" style="height: 100vh;">
+    <div class="container d-flex flex-column justify-content-start align-items-center" style="height: 100vh;">
+      <div class="bg-landing-image"></div>
       <div class="content-box">
         <h1 class="mb-4">Smart Shopping</h1>
         <h3>at the grocery store!</h3>
         <br>
         <p>Learn to spot common psychological pricing tricks and tactics and get the best deals</p>
         <br>
-        <a href="{{ url_for('landingpage2') }}" class="btn-custom-gray">Go to the grocery store</a>
+        <a href="{{ url_for('homepage') }}?showModal=true" class="btn-custom-white">Go to the grocery store</a>
       </div>
     </div>
   </body>

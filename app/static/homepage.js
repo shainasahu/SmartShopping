@@ -21,4 +21,25 @@ document.addEventListener("DOMContentLoaded", function () {
             setToGray();
         });
     });
+
+    // functionality to show modal on first visit
+    if (!localStorage.getItem("hasVisited")) {
+        // Show the modal if it's the first visit
+        var myModal = new bootstrap.Modal(document.getElementById('howToModal'), {
+            keyboard: false // Optionally disable closing with the keyboard
+        });
+        myModal.show();
+
+        // Set a flag in localStorage so the modal won't show again
+        localStorage.setItem("hasVisited", "true");
+    }
+
+    // Show the modal if the user is coming from the landing page (via query parameter)
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('showModal')) {
+        var myModal = new bootstrap.Modal(document.getElementById('howToModal'), {
+            keyboard: false // Optionally disable closing with the keyboard
+        });
+        myModal.show();
+    }
 });

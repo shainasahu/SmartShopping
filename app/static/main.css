@@ -13,26 +13,54 @@
     letter-spacing: 2px;
 }
 
+nav {
+    background-color: rgb(220, 232, 220);
+}
+
 .content-box {
-    background-color: rgb(194, 238, 194);
+    background-color: rgb(220, 232, 220);
+    position: absolute;
+    bottom: 60px; /* Changed from 0 to add some space at the bottom */
+    width: calc(100% -120px); /* Adjust width to account for margin */
     margin: 10px;
     padding: 20px;
     border-radius: 8px; /* makes corners rounded */
+    box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Centers text horizontally */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers items horizontally */
+    justify-content: center; /* Centers items vertically (if needed) */
 }
 
-.btn-custom-gray {
+.content-box-learn {
+    background-color: rgb(220, 232, 220);
+    position: relative;
+    margin: 50px;
+    padding: 80px;
+    border-radius: 8px; /* makes corners rounded */
+    box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Centers text horizontally */
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers items horizontally */
+    justify-content: center; /* Centers items vertically (if needed) */
+}
+
+.btn-custom-white {
     padding: 10px 20px;
-    background-color: #b0b0b0;
-    border: 2px solid #b0b0b0;
+    background-color: white;
+    border: 2px solid white;
     border-radius: 8px;
     color: black;
-    font-weight: 500;
-    font-size: 1.1rem;
+    font-weight: 800;
+    font-size: 1.3rem;
     text-decoration: none;
     transition: all 0.2s ease;
 }
 
-.btn-custom-gray:hover {
+.btn-custom-white:hover {
     background-color: #b0b0b0;
     color: white;
 }
@@ -44,6 +72,17 @@
     background-image: url('https://cdn.prod.website-files.com/63bc15b680c7e6464531c13e/66dafd5e8b547a9a48d37824_45%20-%20Grocery%20store%20layout%20Hero.jpg');
     background-size: cover;
     background-position: center;
+}
+
+.bg-landing-image {
+    position: relative;
+    width: 100%;
+    top: 50px;
+    height: 50vh;
+    background-image: url('https://t3.ftcdn.net/jpg/04/31/22/00/360_F_431220052_j5LhjzK1FcJw6x7RtzIIdxliLAFV2oPb.jpg');
+    background-size: contain;
+    background-position: top center;
+    background-repeat: no-repeat;
 }
 
 .store-button {
@@ -62,4 +101,23 @@
 .store-button:hover {
     background-color: #6c757d;
     color: white;
+}
+
+.modal-body {
+    background-color: #f8f9fa;
+    font-size: 1.3rem;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.price-wrap {
+    background: #ffffff;
+    border: #6c757d;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin: 5px;
+    font-size: 1rem;
+    text-align: center;
 }
