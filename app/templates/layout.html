@@ -17,11 +17,36 @@
 
   </head>
   <body>
-    <nav class="navbar navbar-light bg-light justify-content-between px-3">
-      <a class="btn-custom-gray" href="{{ url_for('homepage') }}">Go to Grocery Store</a>
-      <div class="navbar-brand">SMART SHOPPING</div>
-      <a class="btn-custom-gray" href="{{ url_for('quiz', qid=1) }}">Ready to shop?</a>
+    <nav class="navbar navbar-light px-3">
+      <div class="d-flex justify-content-start">
+        <a class="btn-custom-white me-3" href="{{ url_for('homepage') }}">Go to Store</a>
+        <a class="btn-custom-white" href="{{ url_for('quiz', qid=1) }}">Ready to shop?</a>
+      </div>
+      <div class="navbar-brand text-center">SMART SHOPPING</div>
+      <div class="d-flex justify-content-end">
+        <button class="btn-custom-white" data-bs-toggle="modal" data-bs-target="#howToModal">How To Play</button>
+      </div>
     </nav>
+
+    <div class="modal fade" id="howToModal" tabindex="-1" aria-labelledby="howToModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title" id="howToModalLabel">How To Play</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Random Text for Now -->
+            <p>Welcome to the grocery store - you have a long grocery list today...</p>
+            <p>First, explore the products in the different sections of the store and learn how they're tricking you.</p>           
+            <p>Then, when you're ready, go shopping!</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Placeholder for child templates -->
     <div>
@@ -30,6 +55,8 @@
     </div>
 
     <script src="{{ url_for('static', filename='homepage.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
 
   </body>
 </html>
