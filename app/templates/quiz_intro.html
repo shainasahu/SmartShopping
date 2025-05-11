@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="text-center mt-5 content-box-learn">
+  <p>Time for some smart shopping...</p>
+  <p>
+    But you only have
+    <div class="bold-text">10 seconds for each product!</div> <br>
+    Remember all the tricks you learnt of, and avoid being tricked!
+  </p>
+  <a href="{{ url_for('quiz') }}" class="btn-custom-white">Begin Shopping</a>
+</div>
+<img src="https://img.freepik.com/free-vector/shopping-cart-realistic_1284-6011.jpg?semt=ais_hybrid&w=740" alt="shopping cart" style="max-height: 270px; max-width: 100%; margin: 0 auto; display: block;">
+{% endblock %}
