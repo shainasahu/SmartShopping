@@ -99,26 +99,37 @@ if (hintLink && hintText && hintContainer) {
       }
   }
 
+  let resultValue = "";
+  
   function handleChoice(selected, correct, tactic) {
+      
       clearInterval(countdown);
       if (timerElement) timerElement.style.display = 'none';
 
       const feedbackBox = document.getElementById("feedback-box");
       const feedbackMessage = document.getElementById("feedback-message");
+      const resultInput = document.getElementById("result");
       
       if (feedbackBox && feedbackMessage) {
           let message = "";
           
           if (selected === correct) {
               message = `<h4>✅ Correct!</h4>The best value was: <h4>${correct}</h4><strong>Remember, </strong>${tactic}<br><br>`;
+              resultValue = 'correct';
           } else if (selected === "") {
               message = `<h4>⏰ Time's up!</h4>The more expensive item will be automatically added to your cart.<br>The best value was: <h4>${correct}</h4><strong>Remember, </strong>${tactic}<br><br>`;
+              resultValue = 'incorrect';
           } else {
               message = `<h4>❌ Incorrect.</h4>The best value was: <h4>${correct}</h4><strong>Remember, </strong>${tactic}<br><br>`;
+              resultValue = 'incorrect';
           }
 
           feedbackMessage.innerHTML = message;
           feedbackBox.classList.remove("hidden");
+      }
+
+      if (resultInput) {
+          resultInput.value = resultValue;
       }
 
       // Disable all buttons
@@ -138,6 +149,13 @@ if (hintLink && hintText && hintContainer) {
           hiddenInput.name = "selected_price";
           hiddenInput.value = selectedValue;
           form.appendChild(hiddenInput);
+
+          const resultInput = document.createElement("input");
+          resultInput.type = "hidden";
+          resultInput.name = "result";
+          resultInput.value = resultValue;
+          form.appendChild(resultInput);
+
           form.submit();
       }
   }

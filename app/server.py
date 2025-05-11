@@ -265,14 +265,10 @@ def quiz():
     elif request.method == 'POST':
         current_step = session['step']
         current_item = quiz_data[current_step]
-        selected_option = request.form.get('selected_price', '').strip()
+        result = request.form.get('result')
 
         # Determine if selected option is correct and get its value
-        is_correct = float(selected_option) == current_item['correct_price'][1]
-        print(is_correct)
-        print(selected_option)
-        print(current_item['correct_price'][1])
-        price_value = current_item['correct_price'][1] if is_correct else current_item['incorrect_price'][1]
+        price_value = current_item['correct_price'][1] if result == 'correct' else current_item['incorrect_price'][1]
 
         session['total_spent'] += price_value
 
