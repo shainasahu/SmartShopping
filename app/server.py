@@ -3,6 +3,7 @@ from flask import render_template
 from flask import Response, request, jsonify, redirect, url_for
 from urllib.parse import unquote
 from flask import session
+import re
 
 app = Flask(__name__)
 app.secret_key = 'zoe-smart-shopping-secret'
@@ -12,19 +13,19 @@ quiz_data = [
         "id": 1, 
         "images": ["/static/img/1.1.png", "/static/img/1.2.png"],
         "description": "Buy some fresh apple juice…",
-        "options": ["$7.99", "$7.00"], 
+        "options": ["$7.00", "$7.99"], 
         "hint": "Numbers ending in .99 feel cheaper.", 
-        "correct_price": "$7.00",
-        "incorrect_price": "$7.99"
+        "correct_price": ["$7.00",7.00],
+        "incorrect_price": ["$7.99",7.99]
     },
     {
         "id": 2, 
         "images": ["/static/img/2.1.png", "/static/img/2.2.png"],
         "description": "Buy some bananas…",
-        "options": ["$3.99 - Premium Organic", "$2.99 - Regular"], 
+        "options": ["$2.99 - Regular", "$3.99 - Premium Organic"], 
         "hint": "Labels boost perceived value.", 
-        "correct_price": "$2.99",
-        "incorrect_price": "$3.99"
+        "correct_price": ["$2.99 - Regular", 2.99],
+        "incorrect_price": ["$3.99 - Premium Organic", 3.99]
     },
     {
         "id": 3, 
@@ -32,8 +33,8 @@ quiz_data = [
         "description": "Buy some milk…",
         "options": ["$6.49", "$6.99 - was $10.9"], 
         "hint": "A higher 'original price' makes a deal feel better.", 
-        "correct_price": "$6.49",
-        "incorrect_price": "$6.99"
+        "correct_price": ["$6.49", 6.49],
+        "incorrect_price": ["$6.99 - was $10.99", 6.99]
     },
     {
         "id": 4, 
@@ -41,8 +42,8 @@ quiz_data = [
         "description": "Buy some eggs…",
         "options": ["$4.49 for 400g", "$3.99 for 250g"], 
         "hint": "Check the cost per unit.", 
-        "correct_price": "$4.49",
-        "incorrect_price": "$3.99"
+        "correct_price": ["$4.49 for 400g", 4.49],
+        "incorrect_price": ["$3.99 for 250g", 6.384] # this is the price of 400g
     },
     {
         "id": 5, 
@@ -50,26 +51,26 @@ quiz_data = [
         "description": "Buy some delicious jam…",
         "options":  ["1 for $2.99 - Strawberry Jam", "1 for $5.99 - Buy 1 Get 1 50% Off"], 
         "hint": "BOGO deals sound more exciting than they are.", 
-        "correct_price": "$2.99",
-        "incorrect_price": "$5.99"
+        "correct_price": ["1 for $2.99 - Strawberry Jam", 2.99],
+        "incorrect_price": ["1 for $5.99 - Buy 1 Get 1 50% Off", 5.99]
     },
     {
         "id": 6, 
         "images": ["/static/img/6.1.png", "/static/img/6.2.png"],
         "description": "Buy some chips…",
-        "options": ["$4.49 - “Best Selling Chips!”", "$3.99 - Crispy Chips!"], 
+        "options": ["$3.99 - Crispy Chips!", "$4.49 - Best Selling Chips!"], 
         "hint": "We tend to follow the crowd.", 
-        "correct_price": "$3.99",
-        "incorrect_price": "$4.49"
+        "correct_price": ["$3.99 - Crispy Chips!", 3.99],
+        "incorrect_price": ["$4.49 - Best Selling Chips!", 4.49]
     },
     {
         "id": 7, 
         "images": ["/static/img/7.1.png", "/static/img/7.2.png"],
         "description": "Buy some soda…",
-        "options": ["$5.99 - Only 2 left!", "$4.99 - Soda"], 
+        "options": ["$4.99 - Soda", "$5.99 - Only 2 left!"], 
         "hint": "Some phrases create fear of missing out.", 
-        "correct_price": "$4.99",
-        "incorrect_price": "$5.99"
+        "correct_price": ["$4.99 - Soda", 4.99],
+        "incorrect_price": ["$5.99 - Only 2 left!", 5.99]
     }
 ]
 
@@ -248,66 +249,49 @@ def quiz_intro():
 
 @app.route('/quiz', methods=['GET', 'POST'])
 def quiz():
-    if request.method == 'POST' or 'step' not in session:
-        if 'step' not in session:  # fresh start
-            session['step'] = 0
-            session['total_spent'] = 0
-            session['choices'] = []
+    # Initialize session variables if they don't exist
+    if 'step' not in session:
+        session['step'] = 0
+        session['total_spent'] = 0.0
 
-        selected = request.form.get('selected_price')
+    # Handle GET request (display current quiz step)
+    if request.method == 'GET':
+        if session['step'] >= len(quiz_data):
+            return redirect(url_for('quiz_result'))
         current_item = quiz_data[session['step']]
-        is_correct = selected == current_item['correct_price']
+        return render_template('quiz.html', current_item=current_item)
 
-        # Handle skipped/empty submission
-        if not selected:
-            price_value = 0
-        else:
-            try:
-                price_value = float(selected.replace('$', '').split()[0])
-            except (ValueError, IndexError):
-                price_value = 0
+    # Handle POST request (user's selection)
+    elif request.method == 'POST':
+        current_step = session['step']
+        current_item = quiz_data[current_step]
+        selected_option = request.form.get('selected_price', '').strip()
 
-        session['choices'].append({
-            'item': current_item,
-            'selected': selected,
-            'is_correct': is_correct
-        })
+        # Determine if selected option is correct and get its value
+        is_correct = float(selected_option) == current_item['correct_price'][1]
+        print(is_correct)
+        print(selected_option)
+        print(current_item['correct_price'][1])
+        price_value = current_item['correct_price'][1] if is_correct else current_item['incorrect_price'][1]
+
         session['total_spent'] += price_value
+
         session['step'] += 1
 
-    if session['step'] >= len(quiz_data):
-        return redirect(url_for('quiz_result'))
+        # Check if quiz is complete
+        if session['step'] >= len(quiz_data):
+            return redirect(url_for('quiz_result'))
 
-    item = quiz_data[session['step']]
-    paired = list(zip(item["options"], item["images"]))
-    return render_template('quiz.html', item=item, paired=paired)
-
-
+        return redirect(url_for('quiz'))
 
 @app.route('/quiz-result')
 def quiz_result():
-    choices = session.get('choices', [])
-    total_spent = session.get('total_spent', 0)
-    best_value = sum([float(item['correct_price'].replace('$', '').split()[0]) for item in quiz_data])
-    correct_count = sum(1 for c in choices if c['is_correct'])
-    score_percentage = round(correct_count / len(quiz_data) * 100)
+    best_value = 32.94
+    
     return render_template('quiz_result.html', 
-                           total_spent=total_spent,
-                           best_value=best_value,
-                           choices=choices,
-                           correct_count=correct_count,
-                           score_percentage=score_percentage)
+        total_spent=session.get('total_spent', 0),
+        best_value=best_value
+    )
 
 if __name__ == '__main__':
    app.run(debug = True, port=5001)
-'''
-Site Colors
-
-Main - ?
-
-Accent - ?
-
-Light gray - #B2B6BD
-
-Dark gray - #6c757d
-'''
