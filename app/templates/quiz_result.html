@@ -44,7 +44,7 @@
     <div class="result-flex">
       <!-- Your Bag -->
       <div class="bag-section">
-        <h3>Here’s what’s in your bag:</h3>
+        <h3>Here's what's in your bag:</h3>
         <div class="best-bag">
           {% for choice in choices %}
             {% if choice.selected %}
@@ -59,13 +59,13 @@
 
       <!-- Best Bag -->
       <div class="bag-section">
-        <h3>Here’s the best-valued bag:</h3>
+        <h3>Here's the best-valued bag:</h3>
         <img src="{{ url_for('static', filename='images/quiz_items/Best.png') }}" alt="Best Value Items">
       </div>
     </div>
 
     <br>
-    <a href="{{ url_for('quiz_intro') }}" class="back-to-store-btn">Back to the store</a>
+    <a href="{{ url_for('quiz_intro') }}" class="btn-custom-white">Back to the store</a>
   </div>
 </body>
 </html>

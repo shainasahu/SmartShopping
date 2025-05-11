@@ -5,7 +5,73 @@ from urllib.parse import unquote
 from flask import session
 
 app = Flask(__name__)
-app.secret_key = "your-secret-key"
+app.secret_key = 'zoe-smart-shopping-secret'
+
+quiz_data = [
+    {
+        "id": 1, 
+        "images": ["/static/img/1.1.png", "/static/img/1.2.png"],
+        "description": "Buy some fresh apple juice…",
+        "options": ["$7.99", "$7.00"], 
+        "hint": "Numbers ending in .99 feel cheaper", 
+        "correct_price": "$7.00",
+        "incorrect_price": "$7.99"
+    },
+    {
+        "id": 2, 
+        "images": ["/static/img/2.1.png", "/static/img/2.2.png"],
+        "description": "Buy some bananas…",
+        "options": ["$3.99 - Premium Organic", "$2.99 - Regular"], 
+        "hint": "Labels boost perceived value", 
+        "correct_price": "$2.99",
+        "incorrect_price": "$3.99"
+    },
+    {
+        "id": 3, 
+        "images": ["/static/img/3.1.png", "/static/img/3.2.png"],
+        "description": "Buy some milk…",
+        "options": ["$6.49", "$6.99 - was $10.9"], 
+        "hint": "A higher 'original price' makes a deal feel better", 
+        "correct_price": "$6.49",
+        "incorrect_price": "$6.99"
+    },
+    {
+        "id": 4, 
+        "images": ["/static/img/4.1.png", "/static/img/4.2.png"],
+        "description": "Buy some eggs…",
+        "options": ["$4.49 for 400g", "$3.99 for 250g"], 
+        "hint": "Check the cost per unit", 
+        "correct_price": "$4.49",
+        "incorrect_price": "$3.99"
+    },
+    {
+        "id": 5, 
+        "images": ["/static/img/5.1.png", "/static/img/5.2.png"],
+        "description": "Buy some delicious jam…",
+        "options":  ["1 for $2.99 - Strawberry Jam", "1 for $5.99 - Buy 1 Get 1 50% Off"], 
+        "hint": "BOGO deals sound more exciting than they are", 
+        "correct_price": "$2.99",
+        "incorrect_price": "$5.99"
+    },
+    {
+        "id": 6, 
+        "images": ["/static/img/6.1.png", "/static/img/6.2.png"],
+        "description": "Buy some chips…",
+        "options": ["$4.49 - “Best Selling Chips!”", "$3.99 - Crispy Chips!"], 
+        "hint": "We tend to follow the crowd", 
+        "correct_price": "$3.99",
+        "incorrect_price": "$4.49"
+    },
+    {
+        "id": 7, 
+        "images": ["/static/img/7.1.png", "/static/img/7.2.png"],
+        "description": "Buy some soda…",
+        "options": ["$5.99 - Only 2 left!", "$4.99 - Soda"], 
+        "hint": "Some phrases create fear of missing out", 
+        "correct_price": "$4.99",
+        "incorrect_price": "$5.99"
+    }
+]
 
 learning = [
     {
@@ -179,18 +245,6 @@ def learn(lesson_id):
 def quiz_intro():
     session.clear()
     return render_template('quiz_intro.html')
-
-## Added quiz part
-app.secret_key = 'zoe-smart-shopping-secret'
-quiz_data = [
-    {"id": 1, "images": ["juice_7.99.png", "juice_7.00.png"], "hint": "Buy some fresh apple juice…", "options": ["$7.99", "$7.00"], "tactic": "Charm Pricing", "correct_price": "$7.00"},
-    {"id": 2, "images": ["milk_5.99.png", "milk_4.99.png"], "hint": "Buy some milk…", "options": ["$5.99 – “Only 2 left!”", "$4.99"], "tactic": "Scarcity Urgency", "correct_price": "$4.99"},
-    {"id": 3, "images": ["banana_3.99.png", "banana_2.99.png"], "hint": "Buy some bananas…", "options": ["$3.99 – Premium Organic", "$2.99 – Regular"], "tactic": "Labeling", "correct_price": "$2.99 – Regular"},
-    {"id": 4, "images": ["soda_6.49.png", "soda_6.99.png"], "hint": "Buy some soda…", "options": ["$6.49", "$6.99 – was $10.9"], "tactic": "Anchoring", "correct_price": "$6.49"},
-    {"id": 5, "images": ["chips_2.99.png", "chips_5.99.png"], "hint": "Buy some crispy chips…", "options": ["1 for $2.99", "1 for $5.99 – Buy 1 Get 1 50% Off"], "tactic": "BOGO Deals", "correct_price": "1 for $2.99"},
-    {"id": 6, "images": ["jam_4.49.png", "jam_3.99.png"], "hint": "Buy some strawberry jam…", "options": ["$4.49 – “Best Seller!”", "$3.99"], "tactic": "Social Proof", "correct_price": "$3.99"},
-    {"id": 7, "images": ["eggs_4.49.png", "eggs_3.99.png"], "hint": "Buy some eggs…", "options": ["$4.49 for 400g", "$3.99 for 250g"], "tactic": "Unit Price Confusion", "correct_price": "$3.99 for 250g"}
-]
 
 @app.route('/quiz', methods=['GET', 'POST'])
 def quiz():

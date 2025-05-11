@@ -1,16 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Ready to Shop</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='quiz.css') }}">
-</head>
-<body class="quiz-intro-page">
-  <div class="intro-container">
-    <h2>But you only have 10 seconds to select each product!</h2>
-    <p>Spend your time and your money wisely –<br>
-       remember all the tactics you saw marketers use, and avoid being tricked!</p>
-    <a href="{{ url_for('quiz') }}" class="start-button">Begin Shopping</a>
-  </div>
-</body>
-</html>
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="text-center mt-5 content-box-learn">
+  <p>Time for some smart shopping...</p>
+  <p>
+    But you only have
+    <div class="bold-text">10 seconds for each product!</div> <br>
+    Remember all the tricks you learnt of, and avoid being tricked!
+  </p>
+  <a href="{{ url_for('quiz') }}" class="btn-custom-white">Begin Shopping</a>
+</div>
+<img src="https://img.freepik.com/free-vector/shopping-cart-realistic_1284-6011.jpg?semt=ais_hybrid&w=740" alt="shopping cart" style="max-height: 270px; max-width: 100%; margin: 0 auto; display: block;">
+{% endblock %}
