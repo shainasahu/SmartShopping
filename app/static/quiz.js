@@ -110,11 +110,11 @@ if (hintLink && hintText && hintContainer) {
           let message = "";
           
           if (selected === correct) {
-              message = `✅ Correct! <br><br>The correct answer was <strong>${correct}</strong>.<br><br><strong>Remember, <br></strong>${tactic}<br><br>`;
+              message = `<h2>✅ Correct!</h2><br>The correct answer was: <h3>${correct}</h3><br><strong>Remember, <br></strong>${tactic}<br><br>`;
           } else if (selected === "") {
-              message = `⏰ Time's up! <br><br>The more expensive item will be automatically added to your cart.<br><br>The correct answer was <strong>${correct}</strong>.<br><br><strong>Remember, <br></strong>${tactic}<br><br>`;
+              message = `<h2>⏰ Time's up!</h2><br>The more expensive item will be automatically added to your cart.<br><br>The correct answer was: <h3>${correct}</h3><br><strong>Remember, <br></strong>${tactic}<br><br>`;
           } else {
-              message = `❌ Incorrect. <br><br>The correct answer was <strong>${correct}</strong>.<br><br><strong>Remember, <br></strong>${tactic}<br><br>`;
+              message = `<h2>❌ Incorrect.</h2><br>The correct answer was: <h3>${correct}</h3><br><strong>Remember, <br></strong>${tactic}<br><br>`;
           }
 
           feedbackMessage.innerHTML = message;
