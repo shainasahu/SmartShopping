@@ -4,21 +4,22 @@
 <div class="content-box-learn position-relative">
     <div class="timer-top-right" id="timer">10</div>
     
-    <h2 class="mb-4">{{ item.description }}</h2>
+    <h4 class="mb-4">{{ current_item.description }}</h4>
     
     <form method="post" id="quiz-form">
         <div class="product-section">
-            {% for option in item.options %}
+            {% for option in current_item.options %}
                 <div class="choice-block">
-                    <img src="{{ item.images[loop.index0] }}" 
+                    <img src="{{ current_item.images[loop.index0] }}" 
                          alt="Product option {{ loop.index }}" 
                          class="product-img img-fluid mb-3">
                     <button class="price-btn" 
                             name="selected_price" 
-                            value="{{ option }}" 
-                            data-correct="{{ item.correct_price }}"
-                            data-tactic="{{ item.hint }}">
-                            {{ option }}
+                            value="{% if option == current_item.correct_price[0] %}{{ current_item.correct_price[1] }}{% else %}{{ current_item.incorrect_price[1] }}{% endif %}" 
+                            data-label="{{ option }}"
+                            data-correct="{{ current_item.correct_price[1] }}"
+                            data-tactic="{{ current_item.hint }}">
+                        {{ option }}
                     </button>
                 </div>
             {% endfor %}
@@ -34,7 +35,7 @@
     <!-- Hint container -->
     <div class="hint-container">
       <a class="hint-link">Need a Hint?</a>
-      <div id="hint-text" class="hint-text">{{ item.hint }}</div>
+      <div id="hint-text" class="hint-text">{{ current_item.hint }}</div>
     </div>
 </div>
 
