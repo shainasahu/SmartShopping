@@ -1,8 +1,40 @@
 document.addEventListener("DOMContentLoaded", function () {
     const buttons = document.querySelectorAll(".store-button");
+    const allItems = ['Juice', 'Bananas', 'Milk', 'Eggs', 'Jam', 'Chips', 'Soda'];
+    let allViewedBefore = false;
+
+    // always attach this at the start, so it's available no matter when the modal shows
+    const quizBtn = document.getElementById('goToQuizBtn');
+    if (quizBtn) {
+        quizBtn.addEventListener('click', function () {
+            window.location.href = '/quiz-intro';
+        });
+    }
+
+
+    // Function to check if all items are viewed
+    function checkAllItemsViewed() {
+        console.log("Checking if all items viewed...");
+
+        const allViewedNow = allItems.every(item => {
+            return sessionStorage.getItem(item) === 'true';
+        });
+    
+        // Only show modal ONCE, and ONLY after all buttons have been clicked
+        if (allViewedNow && !localStorage.getItem("readyModalShown")) {
+            // Show the modal
+            const readyToShopModal = new bootstrap.Modal(document.getElementById('readyToShopModal'));
+            readyToShopModal.show();
+
+            // Mark modal shown once
+            sessionStorage.setItem("readyModalShown", "1");
+            console.log("ALL ITEMS VIEWED: showing modal (first time)");
+        }
+    }    
+    
 
     buttons.forEach(button => {
-        const id = button.textContent.trim();
+        const id = button.dataset.item;
 
         // Function to update styles to gray
         const setToGray = () => {
@@ -11,35 +43,44 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
         // On page load: check if the button was clicked before
-        if (sessionStorage.getItem(id)) {
+        if (sessionStorage.getItem(id) === 'true') {
             setToGray();
         }
 
         // On click: store and update styles
         button.addEventListener("click", () => {
-            sessionStorage.setItem(id, true);
+            sessionStorage.setItem(id, 'true');
             setToGray();
+            
+            // Check if all items are viewed after each click
+            checkAllItemsViewed();
         });
     });
 
-    // functionality to show modal on first visit
+    // Existing first visit modal logic
     if (!localStorage.getItem("hasVisited")) {
-        // Show the modal if it's the first visit
         var myModal = new bootstrap.Modal(document.getElementById('howToModal'), {
-            keyboard: false // Optionally disable closing with the keyboard
+            keyboard: false
         });
         myModal.show();
-
-        // Set a flag in localStorage so the modal won't show again
         localStorage.setItem("hasVisited", "true");
     }
 
-    // Show the modal if the user is coming from the landing page (via query parameter)
+    // Show the modal if coming from landing page
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('showModal')) {
         var myModal = new bootstrap.Modal(document.getElementById('howToModal'), {
-            keyboard: false // Optionally disable closing with the keyboard
+            keyboard: false
         });
         myModal.show();
     }
+
+    // If modal was already shown once, show it again (only once more)
+    if (sessionStorage.getItem("readyModalShown") === "1") {
+        const readyToShopModal = new bootstrap.Modal(document.getElementById('readyToShopModal'));
+        readyToShopModal.show();
+        sessionStorage.setItem("readyModalShown", "2");
+        console.log("ALL ITEMS VIEWED: showing modal (second time)");
+    }
+
 });

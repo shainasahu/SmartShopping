@@ -259,3 +259,32 @@ nav {
     font-size: 1.5rem;
     color: #000000;
 }
+
+.price-original {
+    font-size: 1.4rem;
+    text-align: center;
+}
+.striked-price {
+    text-decoration: line-through;
+    font-size: 1.4rem;
+    text-align: center;
+}
+
+.price-visual-contrast {
+    font-size: 1.4rem;
+    text-align: center;
+    font-weight: bold;
+    color: red
+}
+
+.price-small {
+    font-size: 1rem;
+    text-align: center;
+    font-weight: 200;
+}
+
+.price-big {
+    font-size: 1.5rem;
+    text-align: center;
+    font-weight: 900;
+}

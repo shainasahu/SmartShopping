@@ -3,13 +3,30 @@
 {% block content %}
 
 <div class="bg-wrapper"> 
-    <a href="{{ url_for('learn', lesson_id='1.1') }}" class="store-button" style="top: 25%; left: 7%;">Juice</a>
-    <a href="{{ url_for('learn', lesson_id='2.1') }}" class="store-button" style="top: 18%; left: 38%;">Bananas</a>
-    <a href="{{ url_for('learn', lesson_id='3.1') }}" class="store-button" style="top: 50%; left: 20%;">Milk</a>
-    <a href="{{ url_for('learn', lesson_id='4.1') }}" class="store-button" style="top: 60%; left: 80%;">Eggs</a>
-    <a href="{{ url_for('learn', lesson_id='5.1') }}" class="store-button" style="top: 55%; left: 55%;">Jam</a>
-    <a href="{{ url_for('learn', lesson_id='6.1') }}" class="store-button" style="top: 75%; left: 37%;">Chips</a>
-    <a href="{{ url_for('learn', lesson_id='7.1') }}" class="store-button" style="top: 25%; left: 77%;">Soda</a>
+    <a href="{{ url_for('learn', lesson_id='1.1') }}" class="store-button" data-item="Juice" style="top: 25%; left: 7%;">Juice</a>
+    <a href="{{ url_for('learn', lesson_id='2.1') }}" class="store-button" data-item="Bananas" style="top: 18%; left: 38%;">Bananas</a>
+    <a href="{{ url_for('learn', lesson_id='3.1') }}" class="store-button" data-item="Milk" style="top: 50%; left: 20%;">Milk</a>
+    <a href="{{ url_for('learn', lesson_id='4.1') }}" class="store-button" data-item="Eggs" style="top: 60%; left: 80%;">Eggs</a>
+    <a href="{{ url_for('learn', lesson_id='5.1') }}" class="store-button" data-item="Jam" style="top: 55%; left: 55%;">Jam</a>
+    <a href="{{ url_for('learn', lesson_id='6.1') }}" class="store-button" data-item="Chips" style="top: 75%; left: 37%;">Chips</a>
+    <a href="{{ url_for('learn', lesson_id='7.1') }}" class="store-button" data-item="Soda" style="top: 25%; left: 77%;">Soda</a>
+</div>
+
+<!-- ready to shop modal -->
+<div class="modal fade" id="readyToShopModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Ready to shop?</h5>
+        </div>
+        <div class="modal-body">
+          You've finished exploring the store and viewed all the pricing tricks! Are you ready to shop?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="goToQuizBtn">Go Shopping</button>
+        </div>
+      </div>
+    </div>
 </div>
 
 {% endblock %}
