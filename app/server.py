@@ -3,6 +3,7 @@ from flask import render_template
 from flask import Response, request, jsonify, redirect, url_for
 from urllib.parse import unquote
 from flask import session
+import time
 import re
 
 app = Flask(__name__)
@@ -225,6 +226,23 @@ learning = [
 ]
 
 # ROUTES
+
+@app.route('/track_learn_time')
+def track_learn_time():
+    lesson_id = request.args.get('lesson_id')
+    time_spent = float(request.args.get('time_spent', 0))
+    
+    # Initialize the session tracking if it doesn't exist
+    if 'learn_times' not in session:
+        session['learn_times'] = {}
+    
+    # Store or accumulate time for this lesson
+    if lesson_id in session['learn_times']:
+        session['learn_times'][lesson_id] += time_spent
+    else:
+        session['learn_times'][lesson_id] = time_spent
+    
+    return '', 204
 
 @app.route('/')
 def landingpage():
